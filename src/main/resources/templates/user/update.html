@@ -3,20 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <title>Tutorial of Develop</title>
-<link rel="stylesheet" th:href="@{/css/user/register.css}">
+<link rel="stylesheet" href="@{/css/user/update.css}">
 </head>
 <body>
-    <h1>情報管理システム</h1>
-    <h2>User登録</h2>
-    <form method="post" th:action="@{/user/register}" th:object="${user}">
+    <h1>User情報管理システム</h1>
+    <h2>User更新</h2>
+    <form method="post" th:action="@{/user/update/{id}/(id=${user.id})}" th:object="${user}">
+        <label for="id">ID</label>
+        <input type="hidden" id="id" name="id" th:value="*{id}" th:text="*{id}">
+        <br>
         <label for="name">名前</label>
         <input type="text" th:field="*{name}" th:errorclass="err">
         <span th:errors="*{name}" class="err"></span>
         <br>
         <label for="gender">性別</label>
         <select th:field="*{gender}" th:errorclass="err">
-            <option value="" th:text="選択してください"></option>
-            <option th:each="item:${T(com.techacademy.entity.User.Gender).values()}" th:value="${item}" th:text="${item}"></option>
+            <option value="" th:text="選択してください">
+            <option th:each="item:${T(com.techacademy.entity.User.Gender).values()}" th:value="${item}" th:text="${item}" th:selected="*{gender} == ${item}">
         </select>
         <span th:errors="*{gender}" class="err"></span>
         <br>
@@ -29,8 +32,8 @@
         <span th:errors="*{email}" class="err"></span>
         <br>
         <br>
-        <input type="submit" value="登録実行">
-        <a th:href="@{/user/list}">登録せずに一覧に戻る</a>
+        <input type="submit" value="更新実行">
+        <a th:href="@{/user/list}">更新せずに一覧に戻る</a>
     </form>
 </body>
 </html>
